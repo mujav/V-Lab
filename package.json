@@ -1,0 +1,18 @@
+{
+  "name": "v-lab",
+  "version": "1.0.0",
+  "description": "virtual chemistry lab",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Meshael Alhujaili",
+  "license": "ISC",
+  "dependencies": {
+    "fontawesome": "^5.6.3",
+    "konva": "^8.3.11",
+    "npm": "^6.13.0",
+    "polotno": "^1.0.0-8"
+  }
+}
