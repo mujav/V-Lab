@@ -220,7 +220,21 @@ var text = new Konva.Text({
   fill: "white",
 });
 
+var permagantDrip = new Konva.Line({
+  points: [
+    66, 100, 66, 115, 66, 130, 60, 140, 65, 150, 60, 160, 65, 170, 60, 180, 70,
+    180, 75, 170, 70, 160, 75, 150, 70, 140, 69, 130, 70, 115, 70, 100,
+  ],
+  fill: "#453a5f",
+  closed: true,
+  x: 35,
+  y: 138,
+  tension: 0.3,
+  visible: false,
+});
+
 var flaskGroup = new Konva.Group({});
+var berutGroup = new Konva.Group({});
 
 // add cursor styling
 BerutStand.on("mouseover", function () {
@@ -248,7 +262,7 @@ imageObj1.onload = function () {
   BerutStand.fillPatternImage(imageObj1);
   standImage.image(imageObj1);
 };
-imageObj1.src = "/assets/berut-stand.png";
+imageObj1.src = "/assets/images/berut-stand.png";
 
 // get fill pattern image
 var fillPatternImage2 = vFlask.fillPatternImage();
@@ -259,7 +273,7 @@ var imageObj2 = new Image();
 imageObj2.onload = function () {
   vFlask.fillPatternImage(imageObj2);
 };
-imageObj2.src = "/assets/v-flask.png";
+imageObj2.src = "/assets/images/v-flask.png";
 
 // get fill pattern image
 var fillPatternImage3 = BerutTube.fillPatternImage();
@@ -271,7 +285,7 @@ imageObj3.onload = function () {
   BerutTube.fillPatternImage(imageObj3);
   tubeImage.image(imageObj3);
 };
-imageObj3.src = "/assets/berut-tube.png";
+imageObj3.src = "/assets/images/berut-tube.png";
 
 var fillPatternImage4 = ironII.fillPatternImage();
 
@@ -281,7 +295,7 @@ var imageObj4 = new Image();
 imageObj4.onload = function () {
   ironII.fillPatternImage(imageObj4);
 };
-imageObj4.src = "/assets/ironII.png";
+imageObj4.src = "/assets/images/ironII.png";
 
 var fillPatternImage5 = permagant.fillPatternImage();
 
@@ -291,7 +305,7 @@ var imageObj5 = new Image();
 imageObj5.onload = function () {
   permagant.fillPatternImage(imageObj5);
 };
-imageObj5.src = "/assets/perM.png";
+imageObj5.src = "/assets/images/perM.png";
 
 var fillPatternImage6 = sulAcid.fillPatternImage();
 
@@ -301,96 +315,85 @@ var imageObj6 = new Image();
 imageObj6.onload = function () {
   sulAcid.fillPatternImage(imageObj6);
 };
-imageObj6.src = "/assets/SulAcid.png";
+imageObj6.src = "/assets/images/SulAcid.png";
 
 var imageObj7 = new Image();
 
 imageObj7.onload = function () {
   backgroundShelf.image(imageObj7);
 };
-imageObj7.src = "/assets/shelf.png";
+imageObj7.src = "/assets/images/shelf.png";
 
 var imageObj8 = new Image();
 
 imageObj8.onload = function () {
   backgroundPoster.image(imageObj8);
 };
-imageObj8.src = "/assets/periodic-table-elements.png";
+imageObj8.src = "/assets/images/periodic-table-elements.png";
 
 var imageObj9 = new Image();
 imageObj9.onload = function () {
   monitor.image(imageObj9);
 };
-imageObj9.src = "/assets/gray-monitor.png";
+imageObj9.src = "/assets/images/gray-monitor.png";
 
-BerutStand.on("dragmove", () => {
-  BerutStand.y(Math.min(BerutStand.y(), 600));
-  BerutStand.y(Math.max(BerutStand.y(), 60));
-  BerutStand.x(Math.min(BerutStand.x(), 1480));
-  BerutStand.x(Math.max(BerutStand.x(), 0));
-});
+// Serilized functions
 
-writeMessage("Step one : add Iron II to the flask");
+writeMessage("Step 1 : add Iron II to the flask");
 
 // IRON ANimation
-var ironClick = 0;
+
 ironII.on("click", function () {
-  if (ironClick == 0) {
-    let quantity = prompt("enter the amount", "");
+  var quantity = prompt("enter the amount", "");
 
-    if (quantity <= 75 && quantity >= 50) {
-      let toolType = prompt("Pour the amount on ?", "");
+  if (quantity <= 0.75 && quantity >= 0.5) {
+    var toolType = prompt("Pour the amount on ?", "");
+    if (toolType == "Flask" || "flask") {
+      setTimeout(function () {
+        rotate.play();
+      }, 1000);
 
-      if (toolType == "Flask" || "flask") {
-        setTimeout(function () {
-          rotate.play();
-        }, 1000);
+      setTimeout(function () {
+        movingH.play();
+      }, 500);
 
-        setTimeout(function () {
-          movingH.play();
-        }, 500);
+      setTimeout(function () {
+        movingV.play();
+      }, 500);
 
-        setTimeout(function () {
-          movingV.play();
-        }, 500);
-      } else {
-        alert("I don't think this experiment should be preform this way :(");
-      }
+      dirp.play();
+      poly.setZIndex(3);
+      filling.play();
+
+      setTimeout(function () {
+        rotate.reverse();
+      }, 4000);
+
+      setTimeout(function () {
+        movingH.reverse();
+      }, 4500);
+
+      setTimeout(function () {
+        movingV.reverse();
+      }, 4500);
     } else {
-      alert("the amount is too big !");
-      ironClick--;
+      alert("I don't think this is the suitable tool ");
+      writeMessage("Step 1 : add Iron II to the flask");
     }
-  } else if (ironClick == 1) {
-    dirp.play();
-    poly.setZIndex(3);
-    filling.play();
-
-    setTimeout(function () {
-      rotate.reverse();
-    }, 4000);
-
-    setTimeout(function () {
-      movingH.reverse();
-    }, 4500);
-
-    setTimeout(function () {
-      movingV.reverse();
-    }, 4500);
+  } else {
+    alert("the amount is either too big or too small ");
+    writeMessage("Step 1 : add Iron II to the flask");
   }
-  ironClick++;
-});
+  writeMessage("Step 2 : add Sulfiric Acid to the flask");
 
-// Sulfiric Acid ANimation
-var sulAcidClick = 0;
+  // Sulfiric Acid ANimation
+  sulAcid.on("click", function () {
+    let quantity1 = prompt("enter the amount", "");
 
-sulAcid.on("click", function () {
-  if (sulAcidClick == 0) {
-    let quantity = prompt("enter the amount", "");
+    if (quantity1 == 0.25) {
+      let toolType1 = prompt("Pour the amount on ?", "");
 
-    if (quantity <= 50 && quantity >= 25) {
-      let toolType = prompt("Pour the amount on ?", "");
-
-      if (toolType == "Flask" || "flask") {
+      if (toolType1 == "Flask" || "flask") {
         setTimeout(function () {
           rotateS.play();
         }, 1000);
@@ -402,89 +405,107 @@ sulAcid.on("click", function () {
         setTimeout(function () {
           movingVS.play();
         }, 500);
+
+        dirp.play();
+        poly.setZIndex(3);
+        filling.play();
+
+        setTimeout(function () {
+          rotateS.reverse();
+        }, 4000);
+
+        setTimeout(function () {
+          movingHS.reverse();
+        }, 4500);
+
+        setTimeout(function () {
+          movingVS.reverse();
+        }, 4500);
       } else {
         alert("I don't think this experiment should be preform this way :(");
       }
     } else {
-      alert("the amount is too big !");
+      alert("the amount is either too big or too small ");
+      writeMessage("Step 2 : add Sulfiric Acid to the flask");
     }
-  } else if (sulAcidClick == 1) {
-    dirp.play();
-    poly.setZIndex(3);
-    filling.play();
 
-    setTimeout(function () {
-      rotateS.reverse();
-    }, 4000);
+    writeMessage("Step 3 : add Permaganat to the Titration Tube");
+    // Permagnat ANimation
+    permagant.on("click", function () {
+      let quantity2 = prompt("enter the amount", "");
 
-    setTimeout(function () {
-      movingHS.reverse();
-    }, 4500);
+      if (quantity2 <= 1.75 && quantity2 >= 1.5) {
+        let toolType2 = prompt("Pour the amount on ?", "");
 
-    setTimeout(function () {
-      movingVS.reverse();
-    }, 4500);
-  }
-  sulAcidClick++;
-});
+        if (toolType2 == "tube" || "Tube") {
+          setTimeout(function () {
+            rotateP.play();
+          }, 1000);
 
-// Permagnat ANimation
-var permagantClick = 0;
+          setTimeout(function () {
+            movingHP.play();
+          }, 500);
 
-permagant.on("click", function () {
-  if (permagantClick == 0) {
-    let quantity = prompt("enter the amount", "");
+          setTimeout(function () {
+            movingVP.play();
+          }, 500);
 
-    if (quantity <= 50 && quantity >= 25) {
-      let toolType = prompt("Pour the amount on ?", "");
+          dirp.play();
+          polyPtwo.setZIndex(3);
+          polyPone.setZIndex(3);
+          polyP.setZIndex(3);
 
-      if (toolType == "tube" || "Tube") {
-        setTimeout(function () {
-          rotateP.play();
-        }, 1000);
+          filling2.play();
 
-        setTimeout(function () {
-          movingHP.play();
-        }, 500);
+          setTimeout(function () {
+            filling1.play();
+          }, 1000);
+          setTimeout(function () {
+            filling3.play();
+          }, 2000);
 
-        setTimeout(function () {
-          movingVP.play();
-        }, 500);
+          setTimeout(function () {
+            rotateP.reverse();
+          }, 4000);
+
+          setTimeout(function () {
+            movingHP.reverse();
+          }, 4500);
+
+          setTimeout(function () {
+            movingVP.reverse();
+          }, 4500);
+        } else {
+          alert("I don't think this experiment should be preform this way :(");
+        }
       } else {
-        alert("I don't think this experiment should be preform this way :(");
+        alert("the amount is either too big or too small ");
+        writeMessage("Step 3 : add Permaganat to the Titration Tube");
       }
-    } else {
-      alert("the amount is too big !");
-      permagantClick--;
-    }
-  } else if (permagantClick == 1) {
-    dirp.play();
-    polyPtwo.setZIndex(3);
-    polyPone.setZIndex(3);
-    polyP.setZIndex(3);
 
-    filling2.play();
+      writeMessage("Step 4 : Click on the Tube to start Titration");
+      berutGroup.on("click", function () {
+        if (polyPone.scaleY()) {
+          Pdrips.play();
+          Pdirp.play();
 
-    setTimeout(function () {
-      filling1.play();
-    }, 1000);
-    setTimeout(function () {
-      filling3.play();
-    }, 2000);
+          setTimeout(function () {
+            poly.fill("#453a5f");
+            Pdrips.reset();
+          }, 6000);
 
-    setTimeout(function () {
-      rotateP.reverse();
-    }, 4000);
+          permagantDrip.visible(false);
 
-    setTimeout(function () {
-      movingHP.reverse();
-    }, 4500);
-
-    setTimeout(function () {
-      movingVP.reverse();
-    }, 4500);
-  }
-  permagantClick++;
+          setTimeout(function () {
+            alert("You Passed the Experiment");
+          }, 6500);
+          location.refresh();
+        } else {
+          alert("Titration tube is empty");
+        }
+      });
+    });
+  });
 });
 
 // VFlask animation
@@ -523,10 +544,15 @@ layer.add(poly);
 layer.add(polyP);
 layer.add(polyPone);
 layer.add(polyPtwo);
+berutGroup.add(tubeImage);
+berutGroup.add(standImage);
+layer.add(permagantDrip);
+layer.add(berutGroup);
 layer.add(flaskGroup);
 stage.add(layer);
 
 var dirp = new Audio("/assets/audio/pouring-water.mp3");
+var Pdirp = new Audio("/assets/audio/pdirp.mp3");
 
 var filling = new Konva.Tween({
   node: poly,
@@ -640,3 +666,32 @@ var flaskMoving = new Konva.Tween({
   y: -5,
   easing: Konva.Easings.easout,
 });
+
+var Pdrips = new Konva.Tween({
+  node: permagantDrip,
+  duration: 3,
+  visible: true,
+  easing: Konva.Easings.easout,
+});
+
+// function Pdripping() {
+//   var amplitude = 100;
+//   var period = 2000;
+//   // in ms
+//   var centerX = stage.width() / 2;
+//   var anim = new Konva.Animation(function (frame) {
+//     permagantDrip.x(
+//       amplitude * Math.sin((frame.time * 2 * Math.PI) / period) + centerX
+//     );
+//     poly.fill("#453a5f");
+//   }, layer);
+
+//   anim.start();
+//   Pdirp.play();
+
+//   setTimeout(() => {
+//     anim.stop();
+//     Pdirp.stop();
+//     permagantDrip.visible(false);
+//   }, 2000);
+// }

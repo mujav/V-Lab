@@ -10,8 +10,19 @@
   "author": "Meshael Alhujaili",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^15.0.3",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.7",
+    "express": "^4.17.1",
     "fontawesome": "^5.6.3",
+    "joi": "^13.6.0",
+    "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^8.5.1",
     "konva": "^8.3.11",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.10.10",
     "npm": "^6.13.0",
     "polotno": "^1.0.0-8"
   }
